@@ -31,7 +31,7 @@ const HomePage = () => {
     ) : (
         statusUpdates.map(update => (
           <div key={update._id} className="status-update">
-            <p>{update.user}: {update.text}</p>
+             <p>{update.user.username}: {update.text}</p>
             {update.imageUrl && <img src={update.imageUrl} alt="Status" />}
           </div>
         ))

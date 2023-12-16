@@ -9,6 +9,8 @@ const UserPage = () => {
     const [statusUpdates, setStatusUpdates] = useState([]);
     const [error, setError] = useState('');
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    const [editingText, setEditingText] = useState({});
+    const [isEditing, setIsEditing] = useState({});
 
     const fetchUserDetailsAndStatusUpdates = useCallback(async () => {
         const token = localStorage.getItem('token');
@@ -57,6 +59,16 @@ const UserPage = () => {
       }
   };
 
+  const handleEdit = (updateId) => {
+    setIsEditing({ ...isEditing, [updateId]: true });
+    setEditingText({ ...editingText, [updateId]: statusUpdates.find(u => u._id === updateId).text });
+  };
+
+  const handleSave = async (updateId) => {
+      setIsEditing({ ...isEditing, [updateId]: false });
+      await handleUpdate(updateId, editingText[updateId]);
+  };
+
     return (
         <div className="container">
             <h1>User: {username}</h1>
@@ -68,16 +80,28 @@ const UserPage = () => {
                     <p>Username: {userDetails.username}</p>
                     <p>Joined: {new Date(userDetails.joined).toLocaleDateString()}</p>
                     <div>
-                        <h2>Status Updates:</h2>
-                        {statusUpdates.map(update => (
-                          <div key={update._id} className="status-update">
-                              <p>{update.text}</p>
-                              <button onClick={() => handleUpdate(update._id, 'New text for update')}>Update</button>
-                              <button onClick={() => handleDelete(update._id)}>Delete</button>
-                              {update.imageUrl && <img src={update.imageUrl} alt="Status" style={{ maxWidth: "500px" }} />}
-                          </div>
-                        ))}
-                    </div>
+                <h2>Status Updates:</h2>
+                {statusUpdates.map(update => (
+                    <div key={update._id} className="status-update">
+                        {isEditing[update._id] ? (
+                            <>
+                                <textarea
+                                    value={editingText[update._id]}
+                                    onChange={(e) => setEditingText({ ...editingText, [update._id]: e.target.value })}
+                                />
+                                <button onClick={() => handleSave(update._id)}>Save</button>
+                            </>
+                        ) : (
+                            <>
+                                <p>{update.text}</p>
+                                <button onClick={() => handleEdit(update._id)}>Edit</button>
+                                <button onClick={() => window.confirm('Are you sure you want to delete this update?') && handleDelete(update._id)}>Delete</button>
+                            </>
+                        )}
+                        {update.imageUrl && <img src={update.imageUrl} alt="Status" style={{ maxWidth: "500px" }} />}
+                        </div>
+                    ))}
+                </div>
                 </div>
             ) : (
                 <p>Loading...</p>
