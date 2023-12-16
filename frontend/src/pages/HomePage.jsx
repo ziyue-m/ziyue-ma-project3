@@ -32,6 +32,7 @@ const HomePage = () => {
         statusUpdates.map(update => (
           <div key={update._id} className="status-update">
              <p>{update.user.username}: {update.text}</p>
+             <p>Posted on: {new Date(update.updatedAt).toLocaleString()}</p>
             {update.imageUrl && <img src={update.imageUrl} alt="Status" />}
           </div>
         ))

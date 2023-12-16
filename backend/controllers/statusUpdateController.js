@@ -72,8 +72,8 @@ exports.deleteStatusUpdate = async (req, res) => {
 exports.getAllStatusUpdates = async (req, res) => {
     try {
         const statusUpdates = await StatusUpdate.find()
-                                                 .populate('user', 'username') // 这里填充用户名
-                                                 .sort({ createdAt: -1 });
+            .sort({ updatedAt: -1 }) 
+            .populate('user', 'username'); 
         res.json(statusUpdates);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -88,7 +88,7 @@ exports.getStatusUpdatesForUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const updates = await StatusUpdate.find({ user: user._id }).sort({ timestamp: -1 });
+        const updates = await StatusUpdate.find({ user: user._id }).sort({ updatedAt: -1 });
         res.json(updates);
     } catch (err) {
         console.error(err.message);

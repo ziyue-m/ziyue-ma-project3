@@ -99,6 +99,7 @@ const UserPage = () => {
                             </>
                         )}
                         {update.imageUrl && <img src={update.imageUrl} alt="Status" style={{ maxWidth: "500px" }} />}
+                        <p>Posted on: {new Date(update.updatedAt).toLocaleString()}</p>
                         </div>
                     ))}
                 </div>

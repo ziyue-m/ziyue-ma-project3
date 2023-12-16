@@ -11,14 +11,12 @@ const StatusUpdateSchema = new Schema({
     type: String,
     required: true
   },
-  timestamp: {
-    type: Date,
-    default: Date.now
-  },
   imageUrl: {
     type: String,
     required: false
   }
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('StatusUpdate', StatusUpdateSchema);
