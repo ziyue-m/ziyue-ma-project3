@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/ziyue-m/ziyue-ma-project3.git",
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "react-router-dom": "^6.21.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
