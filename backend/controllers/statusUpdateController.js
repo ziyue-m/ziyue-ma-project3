@@ -3,13 +3,16 @@ const User = require('../models/User');
 
 exports.createStatusUpdate = async (req, res) => {
     const { text, imageUrl } = req.body;
+
+    const userId = req.user._id;
+
     if (!text && !imageUrl) {
         return res.status(400).json({ message: 'Content or image is required' });
     }
 
     try {
         const statusUpdate = new StatusUpdate({
-            user: req.user._id,
+            user: userId,
             text,
             imageUrl
         });
