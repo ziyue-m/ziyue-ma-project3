@@ -11,6 +11,11 @@ export const AuthProvider = ({ children }) => {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
 
+  const setAuthToken = (token) => {
+    localStorage.setItem('token', token);
+    // Additional logic to set the user if needed
+  };
+
   useEffect(() => {
     if (checked) return;
 
@@ -45,8 +50,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(`${apiUrl}/api/users/login`, { username, password });
       if (response.data) {
-        localStorage.setItem('token', response.data.token);
-        setUser(response.data.user); 
+          setAuthToken(response.data.token);
+          setUser(response.data.user);
+          navigate('/');
       }
     } catch (error) {
       console.error("Login failed", error);
@@ -59,7 +65,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, setAuthToken }}>
       {!loading && children}
     </AuthContext.Provider>
   );

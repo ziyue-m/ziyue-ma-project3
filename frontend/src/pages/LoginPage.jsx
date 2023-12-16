@@ -16,11 +16,23 @@ const LoginPage = () => {
         setError('');
         try {
             const response = await axios.post(`${apiUrl}/api/users/login`, { username, password });
-            setAuthToken(response.data.token);
-            navigate('/'); // Redirect to home page after successful login
+            console.log('Login response:', response);
+            if (response.data && response.data.token) {
+                setAuthToken(response.data.token);
+                navigate(`/user/${username}`);
+            } else {
+                // Handle unexpected response structure
+                setError('Unexpected response from server.');
+            }
         } catch (error) {
-            setError('Login failed. Please check your username and password.');
-            console.error('Login error:', error.response.data.message);
+            console.error('Login error:', error);
+            console.log(error);
+            if (error.response && error.response.data && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                // Handle other types of errors (network error, etc.)
+                setError('Login failed. Please try again.');
+            }
         }
     };
 

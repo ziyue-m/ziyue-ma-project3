@@ -13,4 +13,9 @@ router.post('/', authMiddleware, statusUpdateController.createStatusUpdate);
 // @access Public
 router.get('/', statusUpdateController.getAllStatusUpdates);
 
+// @route GET api/statusUpdates/user/:username
+// @desc Get status updates for a specific user
+// @access Private
+router.get('/user/:username', statusUpdateController.getStatusUpdatesForUser);
+
 module.exports = router;

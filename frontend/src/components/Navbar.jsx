@@ -10,9 +10,10 @@ const Navbar = () => {
       <nav>
           <Link to="/" className="nav-link">Home</Link>
           {isLoggedIn ? (
-              <>
-                  <span className="nav-user">{user.username}</span>
-                  <button onClick={logout} className="nav-button">Logout</button>
+              <>    
+                <Link to={`/user/${user.username}`} className="nav-link">Profile</Link>
+                <span className="nav-user">{user.username}</span>
+                <button onClick={logout} className="nav-button">Logout</button>
               </>
           ) : (
               <>

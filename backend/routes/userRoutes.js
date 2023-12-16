@@ -18,4 +18,10 @@ router.post('/login', userController.login);
 // @access Private
 router.get('/current', authMiddleware, userController.getCurrentUser);
 
+// @route GET api/users/:username
+// @desc Get user by username
+// @access Public
+router.get('/:username', userController.getUserByUsername);
+
+
 module.exports = router;

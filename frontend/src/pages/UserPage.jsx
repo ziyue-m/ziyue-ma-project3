@@ -11,12 +11,14 @@ const UserPage = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+      const token = localStorage.getItem('token');
+      const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
+  
       try {
-        const userDetailsResponse = await axios.get(`${apiUrl}/api/users/${username}`);
+        const userDetailsResponse = await axios.get(`${apiUrl}/api/users/${username}`, { headers: authHeaders });
         setUserDetails(userDetailsResponse.data);
-
-        
-        const statusUpdatesResponse = await axios.get(`${apiUrl}/api/statusUpdates/user/${username}`);
+  
+        const statusUpdatesResponse = await axios.get(`${apiUrl}/api/statusUpdates/user/${username}`, { headers: authHeaders });
         setStatusUpdates(statusUpdatesResponse.data);
       } catch (error) {
         setError('Error fetching user details or status updates.');

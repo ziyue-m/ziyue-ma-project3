@@ -72,3 +72,14 @@ exports.getAllStatusUpdates = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+exports.getStatusUpdatesForUser = async (req, res) => {
+    try {
+        const updates = await StatusUpdate.find({ username: req.params.username });
+        res.json(updates);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+};
