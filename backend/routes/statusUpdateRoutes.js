@@ -16,6 +16,17 @@ router.get('/', statusUpdateController.getAllStatusUpdates);
 // @route GET api/statusUpdates/user/:username
 // @desc Get status updates for a specific user
 // @access Private
-router.get('/user/:username', statusUpdateController.getStatusUpdatesForUser);
+router.get('/user/:username', authMiddleware, statusUpdateController.getStatusUpdatesForUser);
+
+// @route PUT api/statusUpdates/:id
+// @desc Update a status update
+// @access Private
+router.put('/:id', authMiddleware, statusUpdateController.updateStatusUpdate);
+
+// @route DELETE api/statusUpdates/:id
+// @desc Delete a status update
+// @access Private
+router.delete('/:id', authMiddleware, statusUpdateController.deleteStatusUpdate);
+
 
 module.exports = router;

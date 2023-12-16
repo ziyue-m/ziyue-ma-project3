@@ -7,7 +7,7 @@ const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const { setAuthToken } = useContext(AuthContext);
+    const { setAuthToken, setUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -19,6 +19,7 @@ const LoginPage = () => {
             console.log('Login response:', response);
             if (response.data && response.data.token) {
                 setAuthToken(response.data.token);
+                setUser(response.data.user);
                 navigate(`/user/${username}`);
             } else {
                 // Handle unexpected response structure

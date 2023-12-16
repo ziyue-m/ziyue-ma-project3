@@ -1,4 +1,5 @@
 const StatusUpdate = require('../models/StatusUpdate');
+const User = require('../models/User');
 
 exports.createStatusUpdate = async (req, res) => {
     const { text, imageUrl } = req.body;
@@ -76,7 +77,12 @@ exports.getAllStatusUpdates = async (req, res) => {
 
 exports.getStatusUpdatesForUser = async (req, res) => {
     try {
-        const updates = await StatusUpdate.find({ username: req.params.username });
+        const user = await User.findOne({ username: req.params.username });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const updates = await StatusUpdate.find({ user: user._id }).sort({ timestamp: -1 });
         res.json(updates);
     } catch (err) {
         console.error(err.message);

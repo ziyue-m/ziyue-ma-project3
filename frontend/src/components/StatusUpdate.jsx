@@ -2,23 +2,32 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 
-const StatusUpdate = () => {
+
+const StatusUpdate = ({ onPostSuccess }) => {
     const [statusText, setStatusText] = useState('');
     const { user } = useContext(AuthContext);
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    console.log('Current user:', user);
 
     const handlePostUpdate = async () => {
-        if (statusText.trim()) {
-            try {
-                await axios.post(`${apiUrl}/api/statusUpdates`, { text: statusText, user: user._id }, {
-                  headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                  }
-                });
-                setStatusText('');
-            } catch (error) {
-                console.error('Error posting status update:', error);
+        if (!statusText.trim()) return;
+        if (!user) {
+            console.error('No user logged in');
+            return <p>Please login to post status updates.</p>;
+        }
+    
+        try {
+            await axios.post(`${apiUrl}/api/statusUpdates`, { text: statusText, user: user._id }, {
+              headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              }
+            });
+            setStatusText('');
+            if(onPostSuccess) {
+                onPostSuccess();
             }
+        } catch (error) {
+            console.error('Error posting status update:', error);
         }
     };
 

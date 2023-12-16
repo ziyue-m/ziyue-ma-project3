@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
         });
         if (response.data) {
           setUser(response.data);
+          setAuthToken(localStorage.getItem('token'));
         }
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -65,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, setAuthToken }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, setUser, setAuthToken}}>
       {!loading && children}
     </AuthContext.Provider>
   );
