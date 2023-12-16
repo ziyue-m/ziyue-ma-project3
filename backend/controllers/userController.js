@@ -26,7 +26,8 @@ exports.register = async (req, res) => {
 
         const payload = {
             user: {
-                id: user.id
+                id: user.id,
+                username: user.username
             }
         };
 
@@ -62,7 +63,8 @@ exports.login = async (req, res) => {
 
         const payload = {
             user: {
-                id: user.id
+                id: user.id,
+                username: user.username
             }
         };
 
@@ -79,4 +81,14 @@ exports.login = async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server error');
     }
+};
+
+exports.getCurrentUser = (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: 'user not verified' });
+      }
+    res.json({
+      id: req.user.id,
+      username: req.user.username,
+    });
 };

@@ -1,38 +1,129 @@
-.App {
-  text-align: center;
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f8fa;
+  color: #14171a;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+nav {
+  background-color: #1da1f2;
   color: white;
+  padding: 10px 5%;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.nav-link {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.nav-link:hover, .nav-link:focus {
+  text-decoration: underline;
+  outline: none;
+}
+
+.nav-user {
+  color: white;
+  margin-right: 10px;
+}
+
+.nav-button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.form {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #e1e8ed;
+  border-radius: 4px;
+}
+
+.form-button {
+  background-color: #1da1f2;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.form-button:hover {
+  background-color: #1a91da;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.status-update {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.status-textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #e1e8ed;
+  border-radius: 4px;
+  min-height: 100px;
+}
+
+.status-button {
+  background-color: #1da1f2;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.status-button:hover {
+  background-color: #1a91da;
+}
+
+.user-details {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .container {
+      width: 95%;
   }
-  to {
-    transform: rotate(360deg);
+
+  nav {
+      flex-direction: column;
+      text-align: left;
+  }
+
+  .nav-link, .nav-user, .nav-button {
+      margin-bottom: 10px;
   }
 }

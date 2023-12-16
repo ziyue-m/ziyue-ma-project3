@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const LoginPage = () => {
@@ -8,15 +8,16 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { setAuthToken } = useContext(AuthContext);
-    const history = useHistory();
+    const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
     const handleLogin = async (event) => {
         event.preventDefault();
         setError('');
         try {
-            const response = await axios.post('/api/users/login', { username, password });
+            const response = await axios.post(`${apiUrl}/api/users/login`, { username, password });
             setAuthToken(response.data.token);
-            history.push('/'); // Redirect to home page after successful login
+            navigate('/'); // Redirect to home page after successful login
         } catch (error) {
             setError('Login failed. Please check your username and password.');
             console.error('Login error:', error.response.data.message);
@@ -26,9 +27,10 @@ const LoginPage = () => {
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} className="form">
                 <input 
                     type="text" 
+                    className="form-input"
                     value={username} 
                     onChange={(e) => setUsername(e.target.value)} 
                     placeholder="Username" 
@@ -36,12 +38,13 @@ const LoginPage = () => {
                 />
                 <input 
                     type="password" 
+                    className="form-input"
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
                     placeholder="Password" 
                     required 
                 />
-                <button type="submit">Login</button>
+                <button type="submit" className="form-button">Login</button>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>

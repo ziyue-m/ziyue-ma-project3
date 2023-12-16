@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const statusUpdateRoutes = require('./routes/statusUpdateRoutes');
-
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Enable CORS for all routes
+app.use(cors());
 // Body parser middleware
 app.use(bodyParser.json());
 

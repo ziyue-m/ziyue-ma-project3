@@ -7,15 +7,16 @@ const UserPage = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [statusUpdates, setStatusUpdates] = useState([]);
   const [error, setError] = useState('');
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const userDetailsResponse = await axios.get(`/api/users/${username}`);
+        const userDetailsResponse = await axios.get(`${apiUrl}/api/users/${username}`);
         setUserDetails(userDetailsResponse.data);
 
         
-        const statusUpdatesResponse = await axios.get(`/api/statusUpdates/user/${username}`);
+        const statusUpdatesResponse = await axios.get(`${apiUrl}/api/statusUpdates/user/${username}`);
         setStatusUpdates(statusUpdatesResponse.data);
       } catch (error) {
         setError('Error fetching user details or status updates.');
@@ -24,21 +25,21 @@ const UserPage = () => {
     };
   
     fetchUserDetails();
-  }, [username]);
+  }, [username, apiUrl]);
 
   return (
-    <div>
+    <div className="container">
       <h1>User: {username}</h1>
       {error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : userDetails ? (
-        <div>
+        <div className="user-details">
           <p>Username: {userDetails.username}</p>
           <p>Joined: {new Date(userDetails.joined).toLocaleDateString()}</p>
           <div>
             <h2>Status Updates:</h2>
             {statusUpdates.map(update => (
-              <div key={update._id}>
+              <div key={update._id} className="status-update">
                 <p>{update.text}</p>
                 {update.imageUrl && <img src={update.imageUrl} alt="Status" style={{ maxWidth: "500px" }}/>}
               </div>
